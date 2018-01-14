@@ -34,8 +34,9 @@ Please list two areas of the assignment you'd like to **discuss further with you
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
+This is the link:
+https://i.imgur.com/LhOCGi8.gif
 
-<img src='https://i.imgur.com/LhOCGi8.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
