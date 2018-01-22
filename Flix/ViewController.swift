@@ -16,6 +16,7 @@ class CustomMovieView: UITableViewCell {
     @IBOutlet weak var movieImage: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var movieDesc: UITextView!
+    var arrID: Int!
 }
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -35,9 +36,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let overview = movie["overview"] as! String
         cell.title.text = mTitle
         cell.movieDesc.text = overview
+        cell.arrID = indexPath.row
         if let pic = movie["poster_path"] as?
             String {
-            let strURL = "http://image.tmdb.org/t/p/w185/" + pic
+            let strURL = "http://image.tmdb.org/t/p/original/" + pic
             print(strURL)
             let url = URL(string: strURL)
             cell.movieImage.af_setImage(withURL: url!)
@@ -60,6 +62,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         movieView.insertSubview(refreshControl, at: 0)
 
         movieView.rowHeight = 250
+        doStuff()
+        
     }
     
     @objc func refreshControlAction(_ refreshControl: UIRefreshControl) {
@@ -83,10 +87,43 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         task.resume()
     }
+    
+    func doStuff() {
+        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
+        let task = session.dataTask(with: request) { (data, response, error) in
+            // This will run when the network request returns
+            if let error = error {
+                print(error.localizedDescription)
+            } else if let data = data {
+                let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+                self.movies = dataDictionary["results"] as! [[String: Any]]
+                self.movieView.reloadData()
+                
+            }
+        }
+        task.resume()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationViewController = segue.destination as! MovieDetailsController
+        let cellSender = sender as! CustomMovieView
+        let movie = movies[cellSender.arrID]
+        let mTitle = movie["title"] as! String
+        let overview = movie["overview"] as! String
+        let date = movie["release_date"] as! String
+        let backdrop = movie["backdrop_path"] as! String
+        let posterpath = movie["poster_path"] as! String
+        destinationViewController.dateString = date
+        destinationViewController.descriptionString = overview
+        destinationViewController.titleString = mTitle
+        destinationViewController.backdropString = backdrop
+        destinationViewController.posterString = posterpath
     }
 
 
