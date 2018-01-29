@@ -119,7 +119,7 @@ Describe any challenges encountered while building the app.
     limitations under the License.
     
     
-Lab 3 - *Flix*
+# Project 3 - *Flix*
 
 Time spent: **5** hours spent in total
 
