@@ -29,6 +29,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return movies.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomMovieView") as! CustomMovieView
         let movie = movies[indexPath.row]
