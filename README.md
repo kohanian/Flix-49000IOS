@@ -150,7 +150,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 Here's a walkthrough of implemented user stories:
 
 Link: 
-https://imgur.com/a/yrxtf.gif
+https://i.imgur.com/UF5IIif.gif
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
